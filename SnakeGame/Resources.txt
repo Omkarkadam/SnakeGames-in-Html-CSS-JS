@@ -1,1 +1,510 @@
-https://stackoverflow.com/questions/38709923/why-is-requestanimationframe-better-than-setinterval-or-settimeout
+Today we will produce a snake game with the ease of HTML, CSS, and Javascript. Building this game will push you to boost your web development skills. It's very easy to make this game just by using the right tools at the right time. We will use sounds, animations, user input like upward, downward keys, etc. So let’s begin with some starter files that I have downloaded in the folder from the internet such as :
+
+1.	bg.jpg (will use for the background of the game)
+2.	food.mp3 (will play when the snake eats the food)
+3.	gameover.mp3 (This sound will be played when the game is over)
+4.	move.mp3 (will be played when the snake changes the direction)
+5.	music.mp3 (We will use this file for the background music)
+You can also use sounds of your choice or if you are willing to use the same files, it is available in the source code at the end of the blog.
+ 
+ 
+Let's open VS code in the folder then we will create one HTML file named index.html and four folders named CSS, js, img, and music. Now inside the folder named css, we will create a CSS file named style.css(for styling) and in the folder named js, we will create the JavaScript file named script.js. Afterward, we will move the image named bg.jpg into the folder named img and all the sounds into the folder named music as shown below :
+ 
+ 
+Now before moving ahead, let me tell you that I will be using the live server extension to live reload the features of our game. I recommend you to use the same.
+To know the process of installation and to run the Live Server look at the video given below:
+ 
+In the index.html file, we will create a boilerplate. If you are using a text editor and if there is no emmet abbreviation, then you can type it there, and for your time convenience there is one shortcut in VS code, that is '!+Enter'. This will help you to create a boilerplate automatically. Then we will give the title as “SnakeMania - Ek Gaming Katha”. You can refer to the code from the snippet given below.
+Code Index.html as described/written in the blog:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnakeMania - Ek Gaming Katha</title>
+</head>
+<body>
+    
+</body>
+</html>
+Copy
+ 
+Now inside the <head> tag we will link a CSS file named style.css using <link> tag by giving the path of the file and after the <body> tag we will link a JavaScript file named script.js with <link> tag by giving the path of the file as shown below:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnakeMania - Ek Gaming Katha</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+ 
+</body>
+<script src="js/index.js"></script>
+</html>
+Copy
+ 
+CREATING STRUCTURE OF GAME
+Inside the <body> tag of the index.html file, 
+•	We will create a <div> block with the class named body and inside it, we will create one child <div> block with the id named board. This div block will be our board (playing area of the game). 
+•	Now we will create two more child <div> blocks with id named scorebox and highcore inside <div> block with the class named body and above the <div> block with id named board. These two <div> blocks will display the current score and high score of the game. 
+•	We will write the text “Score: 0” inside the <div> block with id named scorebox and inside <div> block with id named highscore, we will write the text “Hiscore: 0”. 
+You can refer to the code from the snippet given below.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnakeMania - Ek Gaming Katha</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="body">
+        <div id="scoreBox">Score: 0</div>
+        <div id="hiscoreBox">HiScore: 0</div>
+        <div id="board"></div>
+    </div>
+</body>
+<script src="js/index.js"></script>
+</html>
+Copy
+ 
+1. Styling body
+We will use an image named bg.jpg for the background. You can also use any image of your choice or if you are willing to use the same image, it is available in the source code at the end of the description. So let’s start styling in the style.css file by adding a universal selector to reset CSS, then we will target the <div> block by a class named body and will add some CSS properties in it such as :
+•	background: url("../img/bg.jpg");(sets the background image).
+•	min-height: 100vh;(defines the minimum height of an element).
+•	background-size: 100vw 100vh;(specifies the size of the background images).
+•	background-repeat: no-repeat;(sets if/how a background image will be repeated).
+•	display: flex;(specifies the display behavior (the type of rendering box) of an element).
+•	justify-content: center;(aligns the flexible container's items when the items do not use all available space on the main-axis horizontally).
+•	align-items: center;(specifies the default alignment for items inside the flexible container).
+You can refer to the code from the snippet given below.
+Code style.css as described/written in the blog:
+.body{
+    background: url("../img/bg.jpg"); 
+    min-height: 100vh;
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+Copy
+ 
+The WebPage will look like this:
+ 
+ 
+2. Styling board (playing area of the game)
+Let’s style the <div> block with the class named board which is the child of the <div> block with class named body in the index.html file, so we will target that <div> block in style.css file by class named board and in it we will add some CSS properties such as :
+•	background: linear-gradient(rgb(170, 236, 170), rgb(236, 236, 167));(sets the background using linear-gradient() function).
+•	width: 90vmin;(sets the width of an element).
+•	height: 92vmin;(sets the height of an element).
+•	border: 2px solid black;(sets the border on element).
+•	display: grid;(specifies the display behavior (the type of rendering box) of an element).
+•	grid-template-rows: repeat(18, 1fr);(specifies the number and the heights of the rows in a grid layout).
+•	grid-template-columns: repeat(18, 1fr);(specifies the number and the widths of columns in a grid layout).
+You can refer to the code from the snippet given below.
+#board{
+    background: linear-gradient(rgb(170, 236, 170), rgb(236, 236, 167));
+    width: 90vmin;
+    height: 92vmin;
+    border: 2px solid black;
+    display: grid;
+    grid-template-rows: repeat(18, 1fr);
+    grid-template-columns: repeat(18, 1fr);
+}
+Copy
+The WebPage will look like this:
+ 
+ 
+3. Styling of score box and high score
+For the score box and high score, we will use the font named “New Tegomin” which we will import from google fonts inside the style.css file as shown below.
+@import 
+url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
+Copy
+Now we will target the <div> block of a score box by id named scorebox and we will add some CSS properties such as :
+•	position: absolute;(specifies the type of positioning method used for an element).
+•	top: 9px;(affects the vertical position of a positioned element).
+•	right: 200px;(affects the horizontal position of a positioned element).
+•	font-size: 39px;(sets the size of a font).
+•	font-weight: bold;(sets how thick or thin characters in text should be displayed).
+•	font-family: 'New Tegomin', serif;(specifies the font for an element).
+You can refer to the code from the snippet given below.
+#scoreBox{
+    position: absolute;
+    top: 9px;
+    right: 200px;
+    font-size: 39px;
+    font-weight: bold;
+    font-family: 'New Tegomin', serif;
+}
+Copy
+Let’s target the <div> block of a high score by id named highscore and will add some CSS properties such as :
+•	position: absolute;(specifies the type of positioning method used for an element).
+•	top: 59px;(affects the vertical position of a positioned element).
+•	right: 140px;(affects the horizontal position of a positioned element).
+•	font-size: 39px;(sets the size of a font).
+•	font-weight: bold;(sets how thick or thin characters in text should be displayed).
+•	font-family: 'New Tegomin', serif;(specifies the font for an element).
+You can refer to the code from the snippet given below.
+#hiscoreBox{
+    position: absolute;
+    top: 59px;
+    right: 140px;
+    font-size: 39px;
+    font-weight: bold;
+    font-family: 'New Tegomin', serif;
+}
+Copy
+ 
+The WebPage will look like this:
+ 
+ 
+4. Styling of the head, snake, and food
+We will style the head which will be used in our JavaScript file to display the head of the snake so we will add some CSS properties in head such as :
+•	background: linear-gradient(rgb(240, 124, 124), rgb(228, 228, 129));(sets the background using linear-gradient() function).
+•	border: 2px solid rgb(34, 4, 34);(sets the border on element).
+•	transform: scale(1.02);(applies a 2D or 3D transformation to an element).
+•	border-radius: 9px;(defines the radius of the element's corners).
+You can refer to the code from the snippet given below.
+.head{
+    background: linear-gradient(rgb(240, 124, 124), rgb(228, 228, 129));
+    border: 2px solid rgb(34, 4, 34); 
+    transform: scale(1.02);
+    border-radius: 9px;
+}
+Copy
+Let's style the snake which will be used in our JavaScript file to display the snake so we will add some CSS properties in the snake such as :
+•	background-color: purple;(sets the background color of an element).
+•	border: .25vmin solid white;(sets the border on element).
+•	border-radius: 12px;(defines the radius of the element's corners).
+You can refer to the code from the snippet given below.
+.snake{
+    background-color: purple;
+    border: .25vmin solid white;
+    border-radius: 12px;
+}
+Copy
+ 
+And the last one is food which will be used in our JavaScript file to display the food so we will add some CSS properties in food such as :
+•	background: linear-gradient(red, purple);(sets the background using linear-gradient() function).
+•	border: .25vmin solid black;(sets the border on element).
+•	border-radius: 8px;(defines the radius of the element's corners).
+You can refer to the code from the snippet given below.
+.food{
+    background: linear-gradient(red, purple);
+    border: .25vmin solid black;
+    border-radius: 8px;
+}
+Copy
+ 
+JAVASCRIPT FOR GAME
+•	Game Constants & Variables
+We will create all constants and variables in a JavaScript file named java.script that will be used in our game as shown below.
+Code java.script as described/written in the blog:
+// Game Constants & Variables
+let inputDir = {x: 0, y: 0}; 
+const foodSound = new Audio('music/food.mp3');
+const gameOverSound = new Audio('music/gameover.mp3');
+const moveSound = new Audio('music/move.mp3');
+const musicSound = new Audio('music/music.mp3');
+let speed = 19;
+let score = 0;
+let lastPaintTime = 0;
+let snakeArr = [
+    {x: 13, y: 15}
+];
+ 
+food = {x: 6, y: 7};
+Copy
+ 
+•	Game Functions
+1. Main Function
+We will create the main function for rendering and here instead of the setInterval() method we will use the window.requestAnimationFrame() function for the reason click here. The ctime is our current time and we will create an if statement for time such that it will render the game when the condition is false and after that, this function will call gameEngine() function which will be created later. You can refer to the code from the snippet given below.
+function main(ctime) {
+    window.requestAnimationFrame(main);
+    // console.log(ctime)
+    if((ctime - lastPaintTime)/1000 < 1/speed){
+        return;
+    }
+    lastPaintTime = ctime;
+    gameEngine();
+}
+Copy
+ 
+2. Function for collision
+We will create the function named isCollide and give parameter snake. First, we will write the logic for if a snake bumps into itself, for that we will create a loop in snakeArr and then create the if statement in it with the condition for collision into itself and if the condition is true it will return true. Now we will write the logic for if the snake bumps into the wall, for that we will create one more if statement with the condition for collision into the wall and if the condition is true it will return true. You can refer to the code from the snippet given below.
+function isCollide(snake) {
+    // If you bump into yourself 
+    for (let i = 1; i < snakeArr.length; i++) {
+        if(snake[i].x === snake[0].x && snake[i].y === snake[0].y){
+            return true;
+        }
+    }
+    // If you bump into the wall
+    if(snake[0].x >= 18 || snake[0].x <=0 || snake[0].y >= 18 || snake[0].y <=0){
+        return true;
+    }
+        
+    return false;
+}
+Copy
+ 
+3. gameEngine() Function
+We will create the function named gameEngine() as shown below.
+function gameEngine(){
+}
+Copy
+Inside this function, we will write the logic for,
+- updating the snake array and food.
+- if the snake has eaten the food, increment the score and regenerate the food.
+- moving the snake.
+- displaying the snake. 
+- displaying the food.
+All these points will see one by one as follows :
+ 
+•	Logic for updating the snake array and food
+     This function will update the snake array and food. At first, we will create an if statement with condition that if the function isCollide() with parameter snakeArr returns true means the snake collides with itself or with the wall, then it will play gameOverSound and the background music that is musicSound will be paused and will set the inputDir to its initial value then we will create an alert with text message “Game Over. Press any key to play again!”. After that we will reset the snakearr then it will play musicSound again and it will set the score equal to zero. You can refer to the code from the snippet given below.
+// Part 1: Updating the snake array & Food
+if(isCollide(snakeArr)){
+    gameOverSound.play();
+    musicSound.pause();
+    inputDir =  {x: 0, y: 0}; 
+    alert("Game Over. Press any key to play again!");
+    snakeArr = [{x: 13, y: 15}];
+    musicSound.play();
+    score = 0; 
+}
+Copy
+•	Logic for if the snake has eaten the food, increment the score and regenerate the food
+     Now we will create an if statement with the condition that if the snake has eaten the food then we will play the foodSound and increment the score by 1. We will store the highscore in localstorage and Whenever the snake eats the food we will add one head to it using the unshift() function. After the snake eats the food we will regenerate the food by generating random values between a and b which are the variables created with the values such as a=2 and b=16. You can refer to the code from the snippet given below.
+// If you have eaten the food, increment the score and regenerate the food
+if(snakeArr[0].y === food.y && snakeArr[0].x ===food.x){
+    foodSound.play();
+    score += 1;
+    if(score>hiscoreval){
+        hiscoreval = score;
+        localStorage.setItem("hiscore", JSON.stringify(hiscoreval));
+        hiscoreBox.innerHTML = "HiScore: " + hiscoreval;
+    }
+    scoreBox.innerHTML = "Score: " + score;
+    snakeArr.unshift({x: snakeArr[0].x + inputDir.x, y: snakeArr[0].y + inputDir.y});
+    let a = 2;
+    let b = 16;
+    food = {x: Math.round(a + (b-a)* Math.random()), y: Math.round(a + (b-a)* Math.random())}
+}
+Copy
+ 
+•	Logic for moving the snake
+To move the snake we will iterate the whole snake body for that we will create a decrementing for loop in snakArr and will write some logic to shift the element one by one from the end. You can refer to the code from the snippet given below.
+// Moving the snake
+for (let i = snakeArr.length - 2; i>=0; i--) { 
+    snakeArr[i+1] = {...snakeArr[i]};
+}
+ 
+snakeArr[0].x += inputDir.x;
+snakeArr[0].y += inputDir.y
+Copy
+ 
+•	Logic for displaying the snake
+For displaying the snake first we will clear the innerHTML of the board so when the game loads the snake will render only once. Then we will create a forEach loop in snakeArr and inside it, we will create a new element div inside a variable named snakeElement, then giving style to it such as gridRowStart is e.y and gridCloumnStart is e.x. Now we will create an if-else statement such as if the index is equal to 0 then the class named head will be added to snakeElement else the class named snake will be added to snakeElement. After that we will append the snakeElement as a child inside the board. You can refer to the code from the snippet given below.
+// Display the snake
+board.innerHTML = "";
+snakeArr.forEach((e, index)=>{
+    snakeElement = document.createElement('div');
+    snakeElement.style.gridRowStart = e.y;
+    snakeElement.style.gridColumnStart = e.x;
+ 
+    if(index === 0){
+        snakeElement.classList.add('head');
+    }
+    else{
+        snakeElement.classList.add('snake');
+    }
+    board.appendChild(snakeElement);
+});
+Copy
+ 
+•	Logic for displaying the food
+Let's create an element div in a variable named foodElement and will give the style such as gridRowStart is food.y and gridColumnStart is food.x then inside foodElement we will add the class named food. After that, we will append the foodElemnet as a child inside the board. You can refer to the code from the snippet given below.
+// Display the food
+foodElement = document.createElement('div');
+foodElement.style.gridRowStart = food.y;
+foodElement.style.gridColumnStart = food.x;
+foodElement.classList.add('food')
+board.appendChild(foodElement);
+Copy
+ 
+Whole gameEngine() code in java.script as described/written in the blog:
+function gameEngine(){
+    // Part 1: Updating the snake array & Food
+    if(isCollide(snakeArr)){
+        gameOverSound.play();
+        musicSound.pause();
+        inputDir =  {x: 0, y: 0}; 
+        alert("Game Over. Press any key to play again!");
+        snakeArr = [{x: 13, y: 15}];
+        musicSound.play();
+        score = 0; 
+    }
+ 
+    // If you have eaten the food, increment the score and regenerate the food
+    if(snakeArr[0].y === food.y && snakeArr[0].x ===food.x){
+        foodSound.play();
+        score += 1;
+        if(score>hiscoreval){
+            hiscoreval = score;
+            localStorage.setItem("hiscore", JSON.stringify(hiscoreval));
+            hiscoreBox.innerHTML = "HiScore: " + hiscoreval;
+        }
+        scoreBox.innerHTML = "Score: " + score;
+        snakeArr.unshift({x: snakeArr[0].x + inputDir.x, y: snakeArr[0].y + inputDir.y});
+        let a = 2;
+        let b = 16;
+        food = {x: Math.round(a + (b-a)* Math.random()), y: Math.round(a + (b-a)* Math.random())}
+    }
+ 
+    // Moving the snake
+    for (let i = snakeArr.length - 2; i>=0; i--) { 
+        snakeArr[i+1] = {...snakeArr[i]};
+    }
+ 
+    snakeArr[0].x += inputDir.x;
+    snakeArr[0].y += inputDir.y;
+ 
+    // Part 2: Display the snake and Food
+    // Display the snake
+    board.innerHTML = "";
+    snakeArr.forEach((e, index)=>{
+        snakeElement = document.createElement('div');
+        snakeElement.style.gridRowStart = e.y;
+        snakeElement.style.gridColumnStart = e.x;
+ 
+        if(index === 0){
+            snakeElement.classList.add('head');
+        }
+        else{
+            snakeElement.classList.add('snake');
+        }
+        board.appendChild(snakeElement);
+    });
+    // Display the food
+    foodElement = document.createElement('div');
+    foodElement.style.gridRowStart = food.y;
+    foodElement.style.gridColumnStart = food.x;
+    foodElement.classList.add('food')
+    board.appendChild(foodElement);
+}
+Copy
+ 
+•	Main logic of game
+1. Background music
+When the game starts we will play musicSound, which is the background music of our game as shown below.
+musicSound.play();
+Copy
+2. High Score of the game
+We will create a variable named highscore to store the high score from local storage. Now we will create an if-else statement for the high score such as if the highscore is null then set the hiscoreval to 0 and update it in local storage else fetch the high score and set it into the innerHTML of hiscoreBox as shown below. You can refer to the code from the snippet given below.
+let hiscore = localStorage.getItem("hiscore");
+if(hiscore === null){
+    hiscoreval = 0;
+    localStorage.setItem("hiscore", JSON.stringify(hiscoreval))
+}
+else{
+    hiscoreval = JSON.parse(hiscore);
+    hiscoreBox.innerHTML = "HiScore: " + hiscore;
+}
+Copy
+3. Creating controls of the game
+At first, we will put windowAnimationRequestFrame() with parameter main. Then we will create an addEventListener as keydown then inside it we will set the initial value of snake in inputDir and will create the switch case with giving parameter e.key and inside it will set the cases for keys such as when,
+•	ArrowUp key is clicked the snake will move in an upper direction 
+•	ArrowDown key is clicked snake will move towards to downwards direction
+•	ArrowLeft key is clicked snake will move in the left direction
+•	ArrowRight key is clicked and the snake will move in the right direction. 
+Remember to add the break keyword after every case. You can refer to the code from the snippet given below.
+window.requestAnimationFrame(main);
+window.addEventListener('keydown', e =>{
+    inputDir = {x: 0, y: 1} // Start the game
+    moveSound.play();
+    switch (e.key) {
+        case "ArrowUp":
+            console.log("ArrowUp");
+            inputDir.x = 0;
+            inputDir.y = -1;
+            break;
+ 
+        case "ArrowDown":
+            console.log("ArrowDown");
+            inputDir.x = 0;
+            inputDir.y = 1;
+            break;
+ 
+        case "ArrowLeft":
+            console.log("ArrowLeft");
+            inputDir.x = -1;
+            inputDir.y = 0;
+            break;
+ 
+        case "ArrowRight":
+            console.log("ArrowRight");
+            inputDir.x = 1;
+            inputDir.y = 0;
+            break;
+        default:
+            break;
+    }
+ 
+});
+Copy
+Main Logic code java.script as described/written in the blog:
+// Main logic starts here
+musicSound.play();
+let hiscore = localStorage.getItem("hiscore");
+if(hiscore === null){
+    hiscoreval = 0;
+    localStorage.setItem("hiscore", JSON.stringify(hiscoreval))
+}
+else{
+    hiscoreval = JSON.parse(hiscore);
+    hiscoreBox.innerHTML = "HiScore: " + hiscore;
+}
+ 
+window.requestAnimationFrame(main);
+window.addEventListener('keydown', e =>{
+    inputDir = {x: 0, y: 1} // Start the game
+    moveSound.play();
+    switch (e.key) {
+        case "ArrowUp":
+            console.log("ArrowUp");
+            inputDir.x = 0;
+            inputDir.y = -1;
+            break;
+ 
+        case "ArrowDown":
+            console.log("ArrowDown");
+            inputDir.x = 0;
+            inputDir.y = 1;
+            break;
+ 
+        case "ArrowLeft":
+            console.log("ArrowLeft");
+            inputDir.x = -1;
+            inputDir.y = 0;
+            break;
+ 
+        case "ArrowRight":
+            console.log("ArrowRight");
+            inputDir.x = 1;
+            inputDir.y = 0;
+            break;
+        default:
+            break;
+    }
+ 
+});
+Copy
+ 
+So our game is ready now it's time to show the gameplay of this game and I will make my high score. 
